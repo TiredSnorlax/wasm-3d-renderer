@@ -23,10 +23,12 @@ impl Point3D {
         Self { x, y, z }
     }
 
-    pub fn to_point(&self, width: f32, height: f32, additional_y: f32) -> Point {
+    pub fn to_point(&self, width: f32, height: f32, additional_y: f32, aspect_ratio: f32) -> Point {
         // Apply to formula
         let x = (self.x) / (self.z + additional_y);
         let y = (self.y) / (self.z + additional_y);
+
+        let x = x * (1.0 / aspect_ratio);
 
         // Convert to canvas coordinates
         let x = (x + 1.0) / 2.0 * width;

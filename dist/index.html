@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>NAME OF THE WEBSITE</title>
         <base href="/wasm-3d-renderer/" />
-    <link rel="modulepreload" href="/wasm-3d-renderer/renderer-3d-add9fce568937ed4.js" crossorigin="anonymous" integrity="sha384-YDo7/bzvLbAZiiAc0te6mX+mjS/xcN0/MFaCn6IGsOuHMLVCs04Mmh0pueRDu9Qs"><link rel="preload" href="/wasm-3d-renderer/renderer-3d-add9fce568937ed4_bg.wasm" crossorigin="anonymous" integrity="sha384-8KFeffkF/USwkrSnu5eYyEXJKgJPmKCGdEztGSH/qpFLY5XgL/na6bEW/N5J6EFC" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" href="/wasm-3d-renderer/renderer-3d-7501beecc50717e7.js" crossorigin="anonymous" integrity="sha384-YDo7/bzvLbAZiiAc0te6mX+mjS/xcN0/MFaCn6IGsOuHMLVCs04Mmh0pueRDu9Qs"><link rel="preload" href="/wasm-3d-renderer/renderer-3d-7501beecc50717e7_bg.wasm" crossorigin="anonymous" integrity="sha384-tTmpIpT+hZbA1Kcv/yaUHJMc2eixwrknSvaN2PdhTyjCJSo+7iVFGuWZDJJYXz+6" as="fetch" type="application/wasm"></head>
     <body style="margin: 0; padding: 0; width: 100%; height: 100svh">
         
 <script type="module">
-import init, * as bindings from '/wasm-3d-renderer/renderer-3d-add9fce568937ed4.js';
-const wasm = await init({ module_or_path: '/wasm-3d-renderer/renderer-3d-add9fce568937ed4_bg.wasm' });
+import init, * as bindings from '/wasm-3d-renderer/renderer-3d-7501beecc50717e7.js';
+const wasm = await init({ module_or_path: '/wasm-3d-renderer/renderer-3d-7501beecc50717e7_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -150,11 +150,17 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 })()
 </script></body>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2b2d31;
+        }
         canvas {
-            aspect-ratio: 1 !important;
-            width: 100%;
-            height: auto;
-            max-width: 100%;
+            max-width: 1000px;
+            max-height: 1000px;
+            min-width: 400px;
+            min-height: 600px;
         }
     </style>
 </html>

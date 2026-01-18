@@ -29,7 +29,10 @@ impl Program<RendererMessage> for MyRenderer {
         bounds: Rectangle,
         _cursor: iced::mouse::Cursor,
     ) -> Vec<canvas::Geometry> {
-        let mut frame = Frame::new(renderer, bounds.size());
+        let size = bounds.size();
+        let mut frame = Frame::new(renderer, size);
+
+        let aspect_ratio = size.width / size.height;
 
         let fps_counter = canvas::Text {
             content: format!("FPS: {}", self.fps),
@@ -46,7 +49,7 @@ impl Program<RendererMessage> for MyRenderer {
         if let Some(mesh) = &self.mesh {
             if self.render_points {
                 for point in &mesh.points {
-                    self.draw_circle(&mut frame, point, 5.0);
+                    self.draw_circle(&mut frame, point, 5.0, aspect_ratio);
                 }
             }
 
@@ -56,11 +59,13 @@ impl Program<RendererMessage> for MyRenderer {
                         frame.width(),
                         frame.height(),
                         self.distance_to_screen,
+                        aspect_ratio,
                     );
                     let p2 = mesh.points[edge.end].to_point(
                         frame.width(),
                         frame.height(),
                         self.distance_to_screen,
+                        aspect_ratio,
                     );
 
                     self.draw_line(&mut frame, p1, p2);
@@ -184,9 +189,14 @@ impl MyRenderer {
         }
     }
 
-    fn draw_circle(&self, frame: &mut Frame, center: &Point3D, radius: f32) {
+    fn draw_circle(&self, frame: &mut Frame, center: &Point3D, radius: f32, aspect_ratio: f32) {
         let circle = canvas::Path::circle(
-            center.to_point(frame.width(), frame.height(), self.distance_to_screen),
+            center.to_point(
+                frame.width(),
+                frame.height(),
+                self.distance_to_screen,
+                aspect_ratio,
+            ),
             radius,
         );
         frame.fill(&circle, Color::WHITE);

@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Iced WASM to GitHub Pages
 
 on:
   push:
@@ -12,22 +12,30 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
-          node-version: 20
+          targets: wasm32-unknown-unknown
 
-      - run: npm ci
-      - run: npm run build # outputs dist/
+      - name: Install Trunk
+        run: cargo install trunk
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Build
+        run: trunk build --release
+
+      - name: Upload dist
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/deploy-pages@v4
+      - name: Deploy
+        uses: actions/deploy-pages@v4
